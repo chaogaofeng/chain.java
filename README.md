@@ -1,1 +1,1 @@
-# chain.java
+# chain sdk for java
