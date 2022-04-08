@@ -1,5 +1,7 @@
 package com.glodnet.chain.util;
 
+import org.bouncycastle.util.encoders.Base64;
+
 public class Key {
     private String address;
     private byte[] privKey;
@@ -29,7 +31,7 @@ public class Key {
     public String toString() {
         return "Key{" +
                 "address='" + address + '\'' +
-                ", privKey='" + new String(privKey) + '\'' +
+                ", privKey='" + Base64.toBase64String(privKey) + '\'' +
                 '}';
     }
 }

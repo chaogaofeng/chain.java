@@ -35,6 +35,7 @@ public class JsonToProtoObjectUtil {
         builder.add(ibc.applications.transfer.v1.Tx.getDescriptor().getMessageTypes());
         builder.add(cosmos.gov.v1beta1.Tx.getDescriptor().getMessageTypes());
         builder.add(cosmos.crypto.ed25519.Keys.getDescriptor().getMessageTypes());
+        builder.add(cosmos.crypto.sm2.Keys.getDescriptor().getMessageTypes());
         builder.add(cosmos.crypto.multisig.Keys.getDescriptor().getMessageTypes());
         builder.add(cosmos.crypto.multisig.v1beta1.Multisig.getDescriptor().getMessageTypes());
         builder.add(cosmwasm.wasm.v1.Types.getDescriptor().getMessageTypes());

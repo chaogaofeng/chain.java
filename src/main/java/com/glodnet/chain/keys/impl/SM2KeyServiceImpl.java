@@ -9,7 +9,7 @@ import com.glodnet.chain.util.Bip39Utils;
 import com.glodnet.chain.util.SM2Utils;
 import com.google.protobuf.Any;
 import com.google.protobuf.ByteString;
-import cosmos.crypto.secp256k1.Keys;
+import cosmos.crypto.sm2.Keys;
 import cosmos.tx.signing.v1beta1.Signing;
 import cosmos.tx.v1beta1.TxOuterClass;
 import org.apache.commons.lang3.ArrayUtils;
