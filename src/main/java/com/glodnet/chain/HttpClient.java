@@ -69,14 +69,14 @@ public class HttpClient {
             Response response = httpClient.newCall(request).execute();
             assert response.body() != null;
             if (response.code() >= 400) {
-                String msg = String.format("REST-HTTP code %s, res:%s", response.code(), response.body().string());
+                String msg = String.format("REST-HTTP code %s, res:%s, url: %s", response.code(), response.body().string(), this.baseUrl+path);
                 throw new Exception(msg);
             }
             parser.merge(response.body().string(), builder);
             return (T) builder.build();
         } catch (Exception e) {
             // 未知异常
-            logger.error("REST-API Exception  {} {}", e, method, url);
+            logger.error("REST-API Exception  {} {} {}", e, method, this.baseUrl+path);
             throw new Exception(e);
         }
 

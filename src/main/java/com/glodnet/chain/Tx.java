@@ -66,6 +66,9 @@ public class Tx {
         return this.keyService;
     }
 
+    /**
+     * 构建交易
+     */
     public TxOuterClass.Tx build(BuildTxOptions options) throws Exception {
         TxOuterClass.TxBody txBody = TxOuterClass.TxBody.newBuilder()
                 .addAllMessages(options.getMsgs())
@@ -135,10 +138,16 @@ public class Tx {
         return txBuilder.build();
     }
 
+    /**
+     * 签名交易
+     */
     public TxOuterClass.Tx sign(String name, String password, TxOuterClass.Tx tx, Long accountNumber, Long sequence, boolean overwriteSig) throws Exception {
         return getKeyService().signTx(tx, name, password, chainID, accountNumber, sequence, overwriteSig);
     }
 
+    /**
+     * 广播交易
+     */
     public String broadcast(TxOuterClass.Tx tx) throws Exception {
         ServiceOuterClass.BroadcastTxResponse broadcastTxResponse = Node.broadcastTx(client, ServiceOuterClass.BroadcastTxRequest.newBuilder()
                 .setTxBytes(tx.toByteString())
@@ -161,6 +170,9 @@ public class Tx {
         return txResponse.getTxhash();
     }
 
+    /**
+     * 发送交易(构建、签名、广播）
+     */
     public String send(String name, String password, BuildTxOptions options) throws Exception {
         return broadcast(sign(name, password, build(options), options.getAccountNumber(), options.getSequence(), true));
     }

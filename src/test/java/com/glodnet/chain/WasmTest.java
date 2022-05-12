@@ -22,7 +22,7 @@ public class WasmTest {
 
     @Test
     public void testStoreCode() throws Exception {
-        Tx tx = new Tx(client, null, SignAlgo.SECP256K1,"gnchain", CoinOuterClass.DecCoin.newBuilder().setAmount("0.00002").setDenom("ugnc").build(), new BigDecimal(1.1));
+        Tx tx = new Tx(client, null, SignAlgo.SECP256K1,"gnchain", CoinOuterClass.DecCoin.newBuilder().build(), new BigDecimal(1.1));
 
         // 私钥生成公钥、地址
         String mnemonic = "apology false junior asset sphere puppy upset dirt miracle rice horn spell ring vast wrist crisp snake oak give cement pause swallow barely clever";
