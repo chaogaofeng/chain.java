@@ -171,7 +171,7 @@ public class BuildTxOptions {
 
  ```java
  HttpClient client = new HttpClient("http://127.0.0.1:1317") // 节点api访问地址
- Tx tx = new Tx(client, null, SignAlgo.SM2,"gnchain", CoinOuterClass.DecCoin.newBuilder().build(), new BigDecimal(1.1));
+ Tx tx = new Tx(client, null, SignAlgo.SM2,"gnchain-45_1", CoinOuterClass.DecCoin.newBuilder().build(), new BigDecimal(1.1));
  
  String mnemonic = "apology false junior asset sphere puppy upset dirt miracle rice horn spell ring vast wrist crisp snake oak give cement pause swallow barely clever";
  
@@ -197,7 +197,7 @@ public class BuildTxOptions {
 
 ```java
 HttpClient client = new HttpClient("http://127.0.0.1:1317") // 节点api访问地址
-Tx tx = new Tx(client, null, SignAlgo.SM2,"gnchain", CoinOuterClass.DecCoin.newBuilder().build(), new BigDecimal(1.1));
+Tx tx = new Tx(client, null, SignAlgo.SM2,"gnchain-45_1", CoinOuterClass.DecCoin.newBuilder().build(), new BigDecimal(1.1));
 
 String mnemonic = "apology false junior asset sphere puppy upset dirt miracle rice horn spell ring vast wrist crisp snake oak give cement pause swallow barely clever";
 

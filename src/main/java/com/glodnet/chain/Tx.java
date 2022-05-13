@@ -160,7 +160,7 @@ public class Tx {
 
         Abci.TxResponse txResponse = broadcastTxResponse.getTxResponse();
         if (txResponse.getCode() != 0 || !StringUtil.isNullOrEmpty(txResponse.getCodespace())) {
-            throw new Exception("BroadcastTx error:" + txResponse.getCodespace() + "," + txResponse.getCode() + "," + txResponse.getRawLog() + "\n" + printer.print(tx));
+            throw new Exception("BroadcastTx error:" + txResponse.getCodespace() + "," + txResponse.getCode() + "," + txResponse.getRawLog());
         }
 
         if (txResponse.getTxhash().length() != 64) {

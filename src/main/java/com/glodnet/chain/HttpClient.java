@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
+import java.net.URL;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
@@ -41,8 +42,9 @@ public class HttpClient {
         OkHttpClient httpClient = new OkHttpClient().newBuilder()
                 .readTimeout(Duration.of(10, ChronoUnit.SECONDS))
                 .build();
+
         HttpUrl.Builder httpUrlBuilder = HttpUrl.parse(this.baseUrl).newBuilder();
-        httpUrlBuilder.encodedPath(path);
+        httpUrlBuilder.encodedPath(new URL(this.baseUrl).getPath()+path);
         if (queryMap != null) {
             queryMap.keySet().forEach((key) -> {
                 queryMap.get(key).forEach(val -> httpUrlBuilder.addQueryParameter(key, val));
@@ -69,7 +71,7 @@ public class HttpClient {
             Response response = httpClient.newCall(request).execute();
             assert response.body() != null;
             if (response.code() >= 400) {
-                String msg = String.format("REST-HTTP code %s, res:%s, url: %s", response.code(), response.body().string(), this.baseUrl+path);
+                String msg = String.format("REST-HTTP code %s, res:%s, url: %s", response.code(), response.body().string(), request.url());
                 throw new Exception(msg);
             }
             parser.merge(response.body().string(), builder);
