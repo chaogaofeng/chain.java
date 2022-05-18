@@ -37,5 +37,4 @@ public class AddressUtils {
         }
         return out.toByteArray();
     }
-
 }

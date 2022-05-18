@@ -34,6 +34,11 @@ public abstract class AbstractKeyServiceImpl implements IKeyService {
         this.keyDAO = keyDAO != null ? keyDAO : new DefaultKeyDAOImpl();
     }
 
+    public byte[] showPubKey(String name) throws KeyException {
+        Key key = this.keyDAO.read(name);
+        return key.getPubKey();
+    }
+
     @Override
     public String showAddress(String name) throws KeyException {
         Key key = this.keyDAO.read(name);
@@ -66,16 +71,16 @@ public abstract class AbstractKeyServiceImpl implements IKeyService {
         return Bech32.encode(HRP, bits);
     }
 
-    final void saveKey(String name, String password, String address, byte[] privKey) throws KeyException {
+    final void saveKey(String name, String password, String address, byte[] pubKey, byte[] privKey) throws KeyException {
         byte[] encrypted = this.keyDAO.encrypt(privKey, password);
-        Key key = new Key(address, encrypted);
+        Key key = new Key(address, pubKey, encrypted);
         this.keyDAO.write(name, key);
     }
 
     public final Key getKey(String name, String password) throws KeyException {
         Key key = this.keyDAO.read(name);
         byte[] decrypted = this.keyDAO.decrypt(key.getPrivKey(), password);
-        return new Key(key.getAddress(), decrypted);
+        return new Key(key.getAddress(), key.getPubKey(), decrypted);
     }
 
     public String writeArmorToFile(File filePath, String address, String context) throws FileNotFoundException {

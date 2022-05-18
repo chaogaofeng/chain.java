@@ -8,7 +8,8 @@ import com.glodnet.chain.keys.IKeyDAO;
 import com.glodnet.chain.util.Bip39Utils;
 import com.google.protobuf.Any;
 import com.google.protobuf.ByteString;
-import cosmos.crypto.secp256k1.Keys;
+import com.google.protobuf.Message;
+import cosmos.crypto.secp256k1.Keys.PubKey;
 import cosmos.tx.signing.v1beta1.Signing;
 import cosmos.tx.v1beta1.TxOuterClass;
 import org.apache.commons.lang3.ArrayUtils;
@@ -53,7 +54,7 @@ public class DefaultKeyServiceImpl extends AbstractKeyServiceImpl {
         byte[] encoded = dk.getPubKeyPoint().getEncoded(true);
         byte[] hash = Hash.sha256hash160(encoded);
         String addr = super.toBech32(hash);
-        super.saveKey(name, password, addr, dk.getPrivKeyBytes());
+        super.saveKey(name, password, addr, encoded, dk.getPrivKeyBytes());
         return new Mnemonic(addr, mnemonic);
     }
 
@@ -63,7 +64,7 @@ public class DefaultKeyServiceImpl extends AbstractKeyServiceImpl {
         byte[] encoded = dk.getPubKeyPoint().getEncoded(true);
         byte[] hash = Hash.sha256hash160(encoded);
         String addr = super.toBech32(hash);
-        super.saveKey(name, password, addr, dk.getPrivKeyBytes());
+        super.saveKey(name, password, addr, encoded, dk.getPrivKeyBytes());
         return addr;
     }
 
@@ -96,7 +97,7 @@ public class DefaultKeyServiceImpl extends AbstractKeyServiceImpl {
         byte[] encoded = ECKey.publicPointFromPrivate(privKey).getEncoded(true);
         byte[] hash = Hash.sha256hash160(encoded);
         String addr = super.toBech32(hash);
-        super.saveKey(name, keyPassword, addr, Utils.bigIntegerToBytes(privKey, 32));
+        super.saveKey(name, keyPassword, addr, encoded, Utils.bigIntegerToBytes(privKey, 32));
         return addr;
 
     }
@@ -150,7 +151,7 @@ public class DefaultKeyServiceImpl extends AbstractKeyServiceImpl {
         TxOuterClass.AuthInfo ai = TxOuterClass.AuthInfo.newBuilder()
                 .addSignerInfos(
                         TxOuterClass.SignerInfo.newBuilder()
-                                .setPublicKey(Any.pack(Keys.PubKey.newBuilder().setKey(ByteString.copyFrom(encodedPubkey)).build(), "/"))
+                                .setPublicKey(Any.pack(PubKey.newBuilder().setKey(ByteString.copyFrom(encodedPubkey)).build(), "/"))
                                 .setModeInfo(TxOuterClass.ModeInfo.newBuilder().setSingle(TxOuterClass.ModeInfo.Single.newBuilder().setMode(Signing.SignMode.SIGN_MODE_DIRECT)))
                                 .setSequence(sequence))
                 .setFee(txBuilder.getAuthInfo().getFee()).build();
@@ -173,5 +174,9 @@ public class DefaultKeyServiceImpl extends AbstractKeyServiceImpl {
 
         return txBuilder.addSignatures(ByteString.copyFrom(sigBytes))
                 .build();
+    }
+
+    public Message PubKey(String name) throws KeyException {
+        return PubKey.newBuilder().setKey(ByteString.copyFrom(super.showPubKey(name))).build();
     }
 }

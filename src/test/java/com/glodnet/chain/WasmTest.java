@@ -54,7 +54,7 @@ public class WasmTest {
 
         List<Any> msgs = new ArrayList<>();
         String initArgs = "{\"purchase_price\":{\"amount\":\"100\",\"denom\":\"ugnc\"},\"transfer_price\":{\"amount\":\"999\",\"denom\":\"ugnc\"}}";
-        msgs.add(TxWasm.NewMsgInstantiateContract(address, 15L, initArgs, "label", "", new ArrayList<>()));
+        msgs.add(TxWasm.NewMsgInstantiateContract(address, 15L, initArgs, "", "", new ArrayList<>()));
 
         // 生成、签名、广播交易
         String hash = tx.send("alice", "123456", BuildTxOptions.builder()

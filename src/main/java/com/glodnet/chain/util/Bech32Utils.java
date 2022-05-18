@@ -1,5 +1,6 @@
 package com.glodnet.chain.util;
 
+import org.bitcoinj.core.AddressFormatException;
 import org.bitcoinj.core.Bech32;
 
 public class Bech32Utils {
@@ -12,5 +13,10 @@ public class Bech32Utils {
     public static byte[] fromBech32(String address) {
         Bech32.Bech32Data data = Bech32.decode(address);
         return AddressUtils.convertBits(data.data, 0, data.data.length, 5, 8, true);
+    }
+
+    public static String valoperBech32(String address) {
+        Bech32.Bech32Data data = Bech32.decode(address);
+        return toBech32(data.hrp+"valoper", AddressUtils.convertBits(data.data, 0, data.data.length, 5, 8, true));
     }
 }

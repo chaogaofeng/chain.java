@@ -4,10 +4,12 @@ import org.bouncycastle.util.encoders.Base64;
 
 public class Key {
     private String address;
+    private byte[] pubKey;
     private byte[] privKey;
 
-    public Key(String address, byte[] privKey) {
+    public Key(String address, byte[] pubKey, byte[] privKey) {
         this.address = address;
+        this.pubKey = pubKey;
         this.privKey = privKey;
     }
 
@@ -21,6 +23,10 @@ public class Key {
 
     public byte[] getPrivKey() {
         return privKey;
+    }
+
+    public byte[] getPubKey() {
+        return pubKey;
     }
 
     public void setPrivKey(byte[] privKey) {

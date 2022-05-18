@@ -5,6 +5,6 @@ package com.glodnet.chain;
  */
 public class TestUtils {
     public static HttpClient generateClient()  {
-        return new HttpClient("http://10.1.120.35:30488/testnode-gnchaind/api");
+        return new HttpClient("http://127.0.0.1:1317");
     }
 }

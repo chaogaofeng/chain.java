@@ -5,6 +5,7 @@ import com.glodnet.chain.util.Key;
 import com.glodnet.chain.util.Mnemonic;
 import com.google.protobuf.Any;
 import com.google.protobuf.ByteString;
+import com.google.protobuf.Message;
 import cosmos.auth.v1beta1.Auth;
 import cosmos.base.v1beta1.CoinOuterClass;
 import cosmos.tx.signing.v1beta1.Signing;
@@ -82,6 +83,14 @@ public interface IKeyService {
      * @return Bech32 address
      */
     String showAddress(String name) throws KeyException;
+
+    /**
+     * Gets public key of a key
+     *
+     * @param name Name of the key
+     * @return pubkey
+     */
+    Message PubKey(String name) throws KeyException;
 
     /**
      * Get privKey by name
